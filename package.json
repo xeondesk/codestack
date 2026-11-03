@@ -14,14 +14,28 @@
   ],
   "devDependencies": {
     "@vscode/vsce": "^2.22.0",
-    "ovsx": "^0.8.3"
+    "ovsx": "^0.8.3",
+    "turbo": "^1.13.0",
+    "typescript": "^5.5.4",
+    "eslint": "^8.57.0",
+    "prettier": "^3.3.0",
+    "@typescript-eslint/eslint-plugin": "^7.0.0",
+    "@typescript-eslint/parser": "^7.0.0"
   },
   "scripts": {
-    "compile:codestack-shared": "bun workspace codestack-shared run compile",
-    "build:codestack-web": "bun run compile:codestack-shared && bun workspace codestack-web run vscode:prepublish",
-    "build:codestack-remote": "bun run compile:codestack-shared && bun workspace codestack-remote-ssh run vscode:prepublish",
-    "build:preview": "bun workspace @codestack/portsview-preview run build",
-    "dev:preview": "bun workspace @codestack/portsview-preview run dev",
-    "hot-reload:codestack-web": "bun run compile:codestack-shared && bun run build:codestack-web && cp -R ./apps/codestack-web /ide/extensions/codestack-web"
+    "build": "bun run compile:codestack-shared && turbo run build",
+    "compile": "bun run compile:codestack-shared",
+    "compile:codestack-shared": "bun run --filter=codestack-shared compile",
+    "build:codestack-web": "bun run compile:codestack-shared && bun run --filter=codestack-web vscode:prepublish",
+    "build:codestack-remote": "bun run compile:codestack-shared && bun run --filter=codestack-remote-ssh vscode:prepublish",
+    "build:preview": "bun run --filter=@codestack/portsview-preview build",
+    "dev:preview": "bun run --filter=@codestack/portsview-preview dev",
+    "hot-reload:codestack-web": "bun run compile:codestack-shared && bun run build:codestack-web && cp -R ./apps/codestack-web /ide/extensions/codestack-web",
+    "lint": "turbo run lint",
+    "lint:fix": "turbo run lint -- --fix",
+    "format": "prettier --check \"{apps,packages}/**/*.{ts,tsx,js,json,md}\"",
+    "format:write": "prettier --write \"{apps,packages}/**/*.{ts,tsx,js,json,md}\"",
+    "test": "turbo run test",
+    "clean": "turbo run clean && rimraf apps/*/out packages/*/out packages/*/lib"
   }
 }

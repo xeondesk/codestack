@@ -2,15 +2,14 @@
  *  Copyright (c) CodeStack. All rights reserved.
  *--------------------------------------------------------------------------------------------*/
 
-import { CodeStackClient, CodeStackServer, CodeStackServiceImpl } from '@codestack/codestack-protocol/lib/codestack-service';
+import { CodestackClient, CodestackServer, CodestackServiceImpl } from '@codestack/codestack-protocol/lib/codestack-service';
 import { JsonRpcProxyFactory } from '@codestack/codestack-protocol/lib/messaging/proxy-factory';
 import { NavigatorContext } from '@codestack/codestack-protocol/lib/protocol';
 import { ErrorCodes } from '@codestack/codestack-protocol/lib/messaging/error';
-import { CodeStackHostUrl } from '@codestack/codestack-protocol/lib/util/codestack-host-url';
+import { CodestackHostUrl } from '@codestack/codestack-protocol/lib/util/codestack-host-url';
 import { NotifyRequest, NotifyResponse, RespondRequest, SubscribeRequest, SubscribeResponse } from '@codestack/supervisor-api-grpc/lib/notification_pb';
 import { TasksStatusRequest, TasksStatusResponse, TaskState, TaskStatus } from '@codestack/supervisor-api-grpc/lib/status_pb';
-import { ListenTerminalRequest, ListenTerminalResponse, ListTerminalsRequest, SetTerminalSizeRequest, ShutdownTerminalRequest, Terminal as SupervisorTerminal, TerminalSize as SupervisorTerminalSize, WriteTerminalRequest } from '@codestack/supervisor-api-grpc/lib/terminal_pb';
-import * as grpc from '@grpc/grpc-js';
+import { ListenTerminalRequest, ListenTerminalResponse, ListTerminalsRequest, SetTerminalSizeRequest, ShutdownTerminalRequest, Terminal as SupervisorTerminal, TerminalSize as SupervisorTerminalSize, WriteTerminalRequest } from '@codestack/supervisor-api-grpc/lib/terminal_pb';import * as grpc from '@grpc/grpc-js';
 import * as fs from 'fs';
 import * as http from 'http';
 import * as path from 'path';
@@ -47,8 +46,8 @@ export async function createCodeStackExtensionContext(context: vscode.ExtensionC
 	const codestackApi = workspaceInfo.codestackApi!;
 	const ownerId = workspaceInfo.ownerId;
 
-	const factory = new JsonRpcProxyFactory<CodeStackServer>();
-	const codestackService: CodeStackConnection = new CodeStackServiceImpl<CodeStackClient, CodeStackServer>(factory.createProxy()) as any;
+	const factory = new JsonRpcProxyFactory<CodestackServer>();
+	const codestackService: CodeStackConnection = new CodestackServiceImpl<CodestackClient, CodestackServer>(factory.createProxy()) as any;
 	const codestackScopes = new Set<string>([
 		'resource:workspace::' + workspaceId + '::get/update',
 		'function:accessCodeSyncStorage',
@@ -136,7 +135,7 @@ export async function registerWorkspaceCommands(context: CodeStackExtensionConte
 		return vscode.env.openExternal(vscode.Uri.parse(url));
 	}));
 	context.subscriptions.push(vscode.commands.registerCommand('codestack.open.accessControl', () => {
-		const url = new CodeStackHostUrl(context.info.codestackHost).asAccessControl().toString();
+		const url = new CodestackHostUrl(context.info.codestackHost).asAccessControl().toString();
 		context.telemetryService.sendTelemetryEvent('vscode_execute_command_codestack_open_link', {
 			...context.getWorkspaceTelemetryProperties(),
 			url
@@ -144,7 +143,7 @@ export async function registerWorkspaceCommands(context: CodeStackExtensionConte
 		return vscode.env.openExternal(vscode.Uri.parse(url));
 	}));
 	context.subscriptions.push(vscode.commands.registerCommand('codestack.open.settings', () => {
-		const url = new CodeStackHostUrl(context.info.codestackHost).asSettings().toString();
+		const url = new CodestackHostUrl(context.info.codestackHost).asSettings().toString();
 		context.telemetryService.sendTelemetryEvent('vscode_execute_command_codestack_open_link', {
 			...context.getWorkspaceTelemetryProperties(),
 			url
@@ -189,7 +188,7 @@ export async function registerWorkspaceCommands(context: CodeStackExtensionConte
 		return;
 	}
 	context.subscriptions.push(vscode.commands.registerCommand('codestack.upgradeSubscription', () => {
-		const url = new CodeStackHostUrl(context.info.codestackHost).asBilling().toString();
+		const url = new CodestackHostUrl(context.info.codestackHost).asBilling().toString();
 		context.telemetryService.sendTelemetryEvent('vscode_execute_command_codestack_open_link', {
 			...context.getWorkspaceTelemetryProperties(),
 			url
@@ -272,7 +271,7 @@ export async function registerWorkspaceSharing(context: CodeStackExtensionContex
 	if (!workspaceOwned) {
 		return;
 	}
-	async function controlAdmission(level: CodeStackServer.AdmissionLevel): Promise<void> {
+	async function controlAdmission(level: CodestackServer.AdmissionLevel): Promise<void> {
 		try {
 			if (level === 'everyone') {
 				const confirm = await vscode.window.showWarningMessage('Sharing your workspace with others also means sharing your access to your repository. Everyone with access to the workspace you share can commit in your name.', { modal: true }, 'Share');
@@ -603,8 +602,8 @@ export async function registerTasks(context: CodeStackExtensionContext): Promise
 		}
 	}
 	context.logger.trace('Task status:', [...tasks.values()].map(status => {
-		const stateMap = { [TaskState.OPENING]: 'CLOSED', [TaskState.RUNNING]: 'RUNNING', [TaskState.CLOSED]: 'CLOSED' };
-		return `\t${status.getTerminal()} => ${stateMap[status.getState()]}`;
+		const stateMap: { [key: number]: string } = { [TaskState.OPENING]: 'CLOSED', [TaskState.RUNNING]: 'RUNNING', [TaskState.CLOSED]: 'CLOSED' };
+		return `\t${status.getTerminal()} => ${stateMap[status.getState() as number]}`;
 	}).join('\n'));
 
 	if (token.isCancellationRequested) {
@@ -615,7 +614,7 @@ export async function registerTasks(context: CodeStackExtensionContext): Promise
 	try {
 		const response = await util.promisify(context.supervisor.terminal.list.bind(context.supervisor.terminal, new ListTerminalsRequest(), context.supervisor.metadata, {
 			deadline: Date.now() + SupervisorConnection.deadlines.long
-		}))();
+		}))() as { getTerminalsList: () => SupervisorTerminal[] };
 		for (const term of response.getTerminalsList()) {
 			taskTerminals.set(term.getAlias(), term);
 		}
@@ -628,7 +627,7 @@ export async function registerTasks(context: CodeStackExtensionContext): Promise
 	for (const [alias, taskStatus] of tasks.entries()) {
 		const taskTerminal = taskTerminals.get(alias);
 		if (taskTerminal) {
-			const openMode: TerminalOpenMode | undefined = taskStatus.getPresentation()?.getOpenMode() as TerminalOpenMode;
+			const openMode: TerminalOpenMode | undefined = taskStatus.getPresentation()?.getOpenMode?.() as unknown as TerminalOpenMode;
 			const terminal = createTaskTerminal(taskTerminal, prevTerminal, openMode, alias, context, token);
 			prevTerminal = terminal;
 		}

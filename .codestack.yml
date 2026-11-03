@@ -4,17 +4,17 @@ tasks:
       bun install
     name: Compile codestack-shared
     command: |
-      bun workspace codestack-shared run compile
+      bun run --filter=codestack-shared compile
       gp sync-done shared
-      bun workspace codestack-shared run watch
+      bun run --filter=codestack-shared watch
   - name: Compile codestack-web
     command: |
       gp sync-await shared
-      bun workspace codestack-web run watch
+      bun run --filter=codestack-web watch
   - name: Compile codestack-remote
     command: |
       gp sync-await shared
-      bun workspace codestack-remote-ssh run watch
+      bun run --filter=codestack-remote-ssh watch
 
 vscode:
   extensions:

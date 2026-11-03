@@ -4,11 +4,13 @@
   "license": "UNLICENSED",
   "repository": {
     "type": "git",
-    "url": "https://github.com/codestack-io/codestack"
+    "url": "https://github.com/khulnasoft-ai/codestack"
   },
   "scripts": {
     "build": "sh build.sh"
   },
+  "main": "./lib/index.js",
+  "types": "./lib/index.d.ts",
   "files": [
     "lib"
   ],

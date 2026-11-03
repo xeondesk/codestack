@@ -4,7 +4,6 @@
 
 import * as vscode from 'vscode';
 import * as configcat from 'configcat-node';
-import * as configcatcommon from 'configcat-common';
 import { ILogService } from './logService';
 import { URL } from 'url';
 import { Team, User } from '@codestack/codestack-protocol';
@@ -16,7 +15,7 @@ export type EXPERIMENTAL_SETTINGS = |
 	'dataops';
 
 export class ExperimentalSettings {
-	private configcatClient: configcatcommon.IConfigCatClient;
+	private configcatClient: ReturnType<typeof configcat.createClientWithLazyLoad>;
 	private codestackHostUrl: URL | undefined;
 
 	constructor(
@@ -62,7 +61,7 @@ export class ExperimentalSettings {
 	private async getExperimentValue<T>(key: string, defaultValue: T): Promise<T> {
 		const configcatKey = key.replace(/\./g, '_'); // '.' are not allowed in configcat
 		const user = await this.pendingOwner;
-		const email = User.getPrimaryEmail(user);
+		const email = user.identities.find((i) => i.primaryEmail)?.primaryEmail;
 		const teams = await this.pendingTeams;
 		if (teams.length) {
 			for (const team of teams) {
@@ -76,7 +75,7 @@ export class ExperimentalSettings {
 		return this.configcatClient.getValueAsync(configcatKey, defaultValue, this.getConfigcatUser(user.id, email, undefined));
 	}
 
-	private getConfigcatUser(userId: string, email: string | undefined, teamId: string | undefined): configcatcommon.User {
+	private getConfigcatUser(userId: string, email: string | undefined, teamId: string | undefined): { identifier: string; email?: string; country?: string; customAttributes: { [key: string]: string } } {
 		const attributes: { [key: string]: string } = {
 			"user_id": userId
 		}
@@ -89,7 +88,7 @@ export class ExperimentalSettings {
 		if (this.codestackHostUrl) {
 			attributes["codestack_host"] = this.codestackHostUrl.host;
 		}
-		return new configcatcommon.User(userId, email, undefined, attributes);
+		return { identifier: userId, email, country: undefined, customAttributes: attributes };
 	}
 
 	dispose(): void {

@@ -104,7 +104,8 @@ let QueueSpec = class QueueSpec {
         expect(actual).to.have.lengthOf(expected.length);
         const expIt = expected.entries();
         for (const act of actual) {
-            const { value: [, exp], } = expIt.next();
+            const result = expIt.next();
+            const [, exp] = result.value;
             expect(act).to.deep.equal(exp);
         }
     }

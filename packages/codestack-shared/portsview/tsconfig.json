@@ -1,8 +1,12 @@
 {
-	"extends": "@tsconfig/svelte/tsconfig.json",
 	"compilerOptions": {
 		"rootDir": "./src",
 		"target": "es2020",
+		"moduleResolution": "node",
+		"isolatedModules": true,
+		"esModuleInterop": true,
+		"skipLibCheck": true,
+		"forceConsistentCasingInFileNames": true,
 		"lib": [
 			"es2018",
 			"ES2019.Array",

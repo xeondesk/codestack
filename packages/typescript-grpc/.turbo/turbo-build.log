@@ -1,0 +1,2 @@
+$ sh build.sh
+No proto files found in ..; using type stubs

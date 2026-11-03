@@ -1,1 +1,0 @@
-{"version":3,"file":"connection.d.ts","sourceRoot":"","sources":["../../../src/messaging/node/connection.ts"],"names":[],"mappings":"AAOA,OAAO,EAAE,MAAM,IAAI,CAAC;AACpB,OAAO,EACH,UAAU,EACV,MAAM,EAIT,MAAM,mBAAmB,CAAC;AAG3B,wBAAgB,YAAY,CAAC,EAAE,EAAE,EAAE,GACvB,UAAU,CA4BrB;AAGD,wBAAgB,yBAAyB,CAAC,MAAM,EAAE,UAAU,EAAE,MAAM,EAAE,MAAM,8CAM3E"}

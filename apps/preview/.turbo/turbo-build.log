@@ -1,0 +1,50 @@
+$ node esbuild.js
+▲ [WARNING] Duplicate key "forceConsistentCasingInFileNames" in object literal [duplicate-object-key]
+
+    ../../packages/codestack-shared/portsview/tsconfig.json:33:2:
+      33 │     "forceConsistentCasingInFileNames": true,
+         ╵     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  The original key "forceConsistentCasingInFileNames" is here:
+
+    ../../packages/codestack-shared/portsview/tsconfig.json:9:2:
+      9 │     "forceConsistentCasingInFileNames": true,
+        ╵     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+▲ [WARNING] A11y: visible, non-interactive elements with an on:click event must be accompanied by an on:keydown, on:keyup, or on:keypress event. [plugin esbuild-svelte]
+
+    ../../packages/codestack-shared/portsview/src/components/ContextMenu.svelte:36:5:
+      36 │ 34:           <div class="divider" />
+         ╵      ^
+
+35:         {:else}
+36:           <div class="opt" on:click={() => dispatch("command", menu.command)}>
+              ^
+37:             {menu.label}
+38:             {#if menu.desc?.length > 0}
+
+  The plugin "esbuild-svelte" was triggered by this import
+
+    ../../packages/codestack-shared/portsview/src/porttable/PortTable.svelte:44:24:
+      44 │ import ContextMenu from "../components/ContextMenu.svelte";
+         ╵                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+▲ [WARNING] A11y: visible, non-interactive elements with an on:click event must be accompanied by an on:keydown, on:keyup, or on:keypress event. [plugin esbuild-svelte]
+
+    ../../packages/codestack-shared/portsview/src/components/HoverOptions.svelte:25:5:
+      25 │ 23:       {#each options as opt}
+         ╵      ^
+
+24:         {#if opt.icon != null}
+25:           <span
+              ^
+26:             title={opt.title}
+27:             class="svg-container"
+
+  The plugin "esbuild-svelte" was triggered by this import
+
+    ../../packages/codestack-shared/portsview/src/porttable/PortHoverActions.svelte:18:25:
+      18 │ import HoverOptions from "../components/HoverOptions.svelte";
+         ╵                          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+3 warnings

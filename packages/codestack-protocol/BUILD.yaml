@@ -3,8 +3,8 @@ packages:
     type: generic
     deps:
       - :lib
-      - components/codestack-protocol/go:lib
-      - components/codestack-protocol/java:lib
+      - packages/codestack-protocol/go:lib
+      - packages/codestack-protocol/java:lib
   - name: lib
     type: yarn
     srcs:
@@ -46,4 +46,4 @@ packages:
       - :scripts
     config:
       commands:
-        - ["node", "components-codestack-protocol--scripts/publish.js", "${version}", "components-codestack-protocol--lib/package"]
+        - ["node", "packages/codestack-protocol/scripts/publish.js", "${version}", "packages/codestack-protocol/lib/package"]

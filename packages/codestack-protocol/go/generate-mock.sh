@@ -9,7 +9,7 @@ go install github.com/golang/mock/mockgen@v1.6.0
 
 mockgen \
     -package=protocol \
-    -self_package=github.com/codestack-io/codestack/codestack-protocol \
+    -self_package=github.com/khulnasoft-ai/codestack/codestack-protocol \
     -source=codestack-service.go > mock.go_tmp > mock.go_tmp
 
 mv mock.go_tmp mock.go

@@ -22,10 +22,12 @@
         "declaration": true,
         "declarationMap": true,
         "skipLibCheck": true,
+        "rootDir": "./src",
         "outDir": "lib",
         "useUnknownInCatchVariables": false,
         "esModuleInterop": true
     },
+    "composite": true,
     "include": [
         "src"
     ]

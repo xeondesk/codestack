@@ -1,0 +1,22 @@
+{
+  "compilerOptions": {
+    "target": "es2020",
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "composite": true,
+    "declaration": true,
+    "sourceMap": true
+  },
+  "files": [],
+  "references": [
+    { "path": "./packages/typescript-grpc" },
+    { "path": "./packages/codestack-protocol" },
+    { "path": "./packages/codestack-shared" },
+    { "path": "./apps/codestack-web" },
+    { "path": "./apps/codestack-remote" }
+  ]
+}

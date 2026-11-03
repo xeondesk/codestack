@@ -1,0 +1,25 @@
+{
+  "$schema": "https://turbo.build/schema.json",
+  "pipeline": {
+    "build": {
+      "dependsOn": ["^build"],
+      "outputs": ["lib/**", "out/**", "public/**"]
+    },
+    "compile": {
+      "dependsOn": ["^compile"],
+      "outputs": ["lib/**", "out/**"]
+    },
+    "vscode:prepublish": {
+      "dependsOn": ["compile:codestack-shared"],
+      "outputs": ["out/**"]
+    },
+    "lint": {},
+    "test": {},
+    "dev": {
+      "cache": false
+    },
+    "watch": {
+      "cache": false
+    }
+  }
+}

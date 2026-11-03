@@ -1,4 +1,4 @@
-module github.com/codestack-io/codestack/codestack-protocol
+module github.com/khulnasoft-ai/codestack/codestack-protocol
 
 go 1.24
 

@@ -1,1 +1,0 @@
-{"version":3,"file":"snapshot-url.d.ts","sourceRoot":"","sources":["../src/snapshot-url.ts"],"names":[],"mappings":"AAAA;;;;GAIG;AAEH,MAAM,WAAW,WAAW;IACxB,QAAQ,EAAE,MAAM,CAAC;IACjB,QAAQ,EAAE,MAAM,CAAC;IACjB,QAAQ,EAAE,MAAM,CAAC;CACpB;AACD,yBAAiB,WAAW,CAAC;IACzB,SAAgB,KAAK,CAAC,GAAG,EAAE,MAAM,GAAG,WAAW,CAa9C;CACJ"}

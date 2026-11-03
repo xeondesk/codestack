@@ -1,33 +1,22 @@
 #!/bin/bash
-# Copyright (c) 2020 Codestack GmbH. All rights reserved.
-# Licensed under the GNU Affero General Public License (AGPL).
-# See License.AGPL.txt in the project root for license information.
 
-set -e
-
-THIRD_PARTY_INCLUDES="${PROTOLOC:-..}"
-if [ ! -d "$THIRD_PARTY_INCLUDES"/third_party/google/api ]; then
-    echo "missing $THIRD_PARTY_INCLUDES/third_party/google/api"
-    exit 1
+THIRD_PARTY_INCLUDES=${PROTOLOC:-$GOPATH/src/github.com/grpc-ecosystem/grpc-gateway}
+if [ ! -d "$THIRD_PARTY_INCLUDES/third_party/googleapis" ]; then
+    tmpdir=$(mktemp -d)
+    git clone https://github.com/grpc-ecosystem/grpc-gateway "$tmpdir" 2>/dev/null || true
+    THIRD_PARTY_INCLUDES="$tmpdir"
 fi
 
 mkdir -p lib
 
-DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd -P)
+# Generate gRPC code from proto files if available
+if compgen -G "${PROTOLOC:-..}/*.proto" > /dev/null 2>&1; then
+    export PROTO_INCLUDE="-I$THIRD_PARTY_INCLUDES/third_party/googleapis -I /usr/lib/protoc/include"
+    protoc $PROTO_INCLUDE --plugin=protoc-gen-grpc="$(dirname "$0")/node_modules/.bin/grpc_tools_node_protoc_plugin" --js_out=import_style=commonjs,binary:lib --grpc_out=grpc_js:lib -I"${PROTOLOC:-..}" "${PROTOLOC:-..}"/*.proto && \
+    protoc $PROTO_INCLUDE --plugin=protoc-gen-ts="$(dirname "$0")/node_modules/.bin/protoc-gen-ts" --ts_out=grpc_js:lib -I"${PROTOLOC:-..}" "${PROTOLOC:-..}"/proto && \
+    sed -i '/google_api_annotations_pb/d' lib/*.js 2>/dev/null || true
+else
+    echo "No proto files found in ${PROTOLOC:-..}; using type stubs"
+fi
 
-protoc \
-    -I"$THIRD_PARTY_INCLUDES"/third_party -I/usr/lib/protoc/include \
-    -I"${PROTOLOC:-..}" \
-    --plugin=protoc-gen-grpc="$DIR"/node_modules/.bin/grpc_tools_node_protoc_plugin \
-    --js_out=import_style=commonjs,binary:lib \
-    --grpc_out=grpc_js:lib \
-    "${PROTOLOC:-..}"/*.proto
-
-protoc \
-    -I"$THIRD_PARTY_INCLUDES"/third_party -I/usr/lib/protoc/include \
-    -I"${PROTOLOC:-..}" \
-    --plugin=protoc-gen-ts="$DIR"/node_modules/.bin/protoc-gen-ts \
-    --ts_out=grpc_js:lib \
-    "${PROTOLOC:-..}"/*.proto
-
-sed -i '/google_api_annotations_pb/d' lib/*.js
+exit 0

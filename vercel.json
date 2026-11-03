@@ -2,7 +2,7 @@
 	"$schema": "https://openapi.vercel.sh/vercel.json",
 	"framework": null,
 	"installCommand": "bun install",
-	"buildCommand": "bun workspace @codestack/portsview-preview run build",
+	"buildCommand": "bun run --filter=@codestack/portsview-preview build",
 	"outputDirectory": "apps/preview/public",
 	"cleanUrls": true
 }

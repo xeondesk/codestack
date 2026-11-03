@@ -41,7 +41,8 @@
 		"rootDir": "./src",
 		"esModuleInterop": true,
 		"sourceMap": true,
-		"declaration": true
+		"declaration": true,
+		"composite": true
 	},
 	"include": [
 		"./src/**/*"

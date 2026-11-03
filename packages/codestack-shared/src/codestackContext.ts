@@ -2,7 +2,7 @@
  *  Copyright (c) CodeStack. All rights reserved.
  *--------------------------------------------------------------------------------------------*/
 
-import { CodeStackClient, CodeStackServer, CodeStackServiceImpl, WorkspaceInstanceUpdateListener } from '@codestack/codestack-protocol/lib/codestack-service';
+import { CodestackClient, CodestackServer, CodestackServiceImpl, WorkspaceInstanceUpdateListener } from '@codestack/codestack-protocol/lib/codestack-service';
 import { User } from '@codestack/codestack-protocol/lib/protocol';
 import { ControlServiceClient } from '@codestack/supervisor-api-grpc/lib/control_grpc_pb';
 import { ExposePortRequest } from '@codestack/supervisor-api-grpc/lib/control_pb';
@@ -12,10 +12,10 @@ import { NotificationServiceClient } from '@codestack/supervisor-api-grpc/lib/no
 import { PortServiceClient } from '@codestack/supervisor-api-grpc/lib/port_grpc_pb';
 import { CloseTunnelRequest, RetryAutoExposeRequest, TunnelPortRequest, TunnelVisiblity } from '@codestack/supervisor-api-grpc/lib/port_pb';
 import { StatusServiceClient } from '@codestack/supervisor-api-grpc/lib/status_grpc_pb';
-import { ExposedPortInfo, PortProtocol, PortVisibility, PortsStatus, PortsStatusRequest, PortsStatusResponse } from '@codestack/supervisor-api-grpc/lib/status_pb';
+import { ExposedPortInfo, PortsStatus, PortsStatusRequest, PortsStatusResponse } from '@codestack/supervisor-api-grpc/lib/status_pb';
 import { TerminalServiceClient } from '@codestack/supervisor-api-grpc/lib/terminal_grpc_pb';
 import { TokenServiceClient } from '@codestack/supervisor-api-grpc/lib/token_grpc_pb';
-import { GetTokenRequest } from '@codestack/supervisor-api-grpc/lib/token_pb';
+import { GetTokenRequest, GetTokenResponse } from '@codestack/supervisor-api-grpc/lib/token_pb';
 import * as grpc from '@grpc/grpc-js';
 import * as path from 'path';
 import ReconnectingWebSocket from 'reconnecting-websocket';
@@ -82,7 +82,7 @@ export class SupervisorConnection {
 		}
 		const getTokenResponse = await util.promisify(this.token.getToken.bind(this.token, getTokenRequest, this.metadata, {
 			deadline: Date.now() + SupervisorConnection.deadlines.long
-		}))();
+		}))() as GetTokenResponse;
 		return getTokenResponse.toObject();
 	}
 
@@ -178,15 +178,15 @@ export class SupervisorConnection {
 	async getWorkspaceInfo() {
 		const response = await util.promisify(this.info.workspaceInfo.bind(this.info, new WorkspaceInfoRequest(), this.metadata, {
 			deadline: Date.now() + SupervisorConnection.deadlines.long
-		}))();
+		}))() as WorkspaceInfoResponse;
 		return response.toObject();
 	}
 }
 
 type UsedCodeStackFunction = ['getWorkspace', 'openPort', 'stopWorkspace', 'setWorkspaceTimeout', 'getWorkspaceTimeout', 'getLoggedInUser', 'takeSnapshot', 'waitForSnapshot', 'controlAdmission', 'sendHeartBeat', 'trackEvent', 'getTeams'];
 type Union<Tuple extends any[], Union = never> = Tuple[number] | Union;
-export type CodeStackConnection = Omit<CodeStackServiceImpl<CodeStackClient, CodeStackServer>, 'server'> & {
-	server: Pick<CodeStackServer, Union<UsedCodeStackFunction>>;
+export type CodeStackConnection = Omit<CodestackServiceImpl<CodestackClient, CodestackServer>, 'server'> & {
+	server: Pick<CodestackServer, Union<UsedCodeStackFunction>>;
 };
 
 export class CodeStackExtensionContext implements vscode.ExtensionContext {
@@ -304,13 +304,13 @@ export class CodeStackExtensionContext implements vscode.ExtensionContext {
 	}
 
 	async controlPort(port: number, prevStatus: ExposedPortInfo.AsObject | undefined, updateOptions: Partial<Pick<ExposedPortInfo.AsObject, 'visibility' | 'protocol'>>): Promise<void> {
-		const protocol = updateOptions.protocol ?? prevStatus?.protocol ?? PortProtocol.HTTP;
-		const visibility = updateOptions.visibility ?? prevStatus?.visibility ?? PortVisibility.PRIVATE;
+		const protocol = updateOptions.protocol ?? prevStatus?.protocol ?? 'http';
+		const visibilityStr = String(updateOptions.visibility ?? prevStatus?.visibility ?? 'private');
 
 		await this.codestack.server.openPort(this.info.workspaceId, {
 			port,
-			protocol: protocol === PortProtocol.HTTPS ? 'https' : 'http',
-			visibility: visibility === PortVisibility.PUBLIC ? 'public' : 'private',
+			protocol: protocol === 'https' ? 'https' : 'http',
+			visibility: visibilityStr === 'public' ? 'public' : 'private',
 		});
 	}
 

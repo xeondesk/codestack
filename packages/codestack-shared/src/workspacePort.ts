@@ -2,7 +2,7 @@
  *  Copyright (c) CodeStack. All rights reserved.
  *--------------------------------------------------------------------------------------------*/
 
-import { PortsStatus, PortAutoExposure, PortVisibility, ExposedPortInfo, PortProtocol } from '@codestack/supervisor-api-grpc/lib/status_pb';
+import { PortsStatus, PortAutoExposure, PortVisibility, ExposedPortInfo } from '@codestack/supervisor-api-grpc/lib/status_pb';
 import { URL } from 'url';
 
 export interface ExposedPort extends PortsStatus.AsObject {
@@ -153,7 +153,7 @@ export class CodeStackWorkspacePort {
 		if (!accessible && portStatus.autoExposure === PortAutoExposure.FAILED) {
 			port.contextValue = 'failed-' + port.contextValue;
 		}
-		if (exposed?.protocol && exposed.protocol === PortProtocol.HTTPS) {
+		if (exposed?.protocol && exposed.protocol === 'https') {
 			port.contextValue = 'https-' + port.contextValue;
 		}
 		return port;

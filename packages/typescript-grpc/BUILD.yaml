@@ -5,9 +5,9 @@ packages:
       - package.json
       - build.sh
     deps:
-      - components/supervisor-api:proto
+      - packages/supervisor-api:proto
     env:
-      - PROTOLOC=components-supervisor-api--proto
+      - PROTOLOC=packages/supervisor-api--proto
     config:
       packaging: library
       dontTest: true
@@ -23,7 +23,7 @@ packages:
       - npmPublishTrigger
     deps:
       - :lib
-      - components/codestack-protocol:scripts
+      - packages/codestack-protocol:scripts
     config:
       commands:
-        - ["node", "components-codestack-protocol--scripts/publish.js", "${version}", "components-supervisor-api-typescript-grpc--lib/package"]
+        - ["node", "packages/codestack-protocol/scripts/publish.js", "${version}", "packages/supervisor-api-typescript-grpc/lib/package"]

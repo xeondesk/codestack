@@ -1,0 +1,23 @@
+$ tsc || true
+src/experiments/configcat-server.ts(9,26): error TS2307: Cannot find module 'configcat-common' or its corresponding type declarations.
+src/experiments/configcat.ts(8,39): error TS2307: Cannot find module 'configcat-common/lib/RolloutEvaluator' or its corresponding type declarations.
+src/experiments/configcat.ts(9,34): error TS2307: Cannot find module 'configcat-common/lib/ConfigCatClient' or its corresponding type declarations.
+src/util/analytics.ts(37,17): error TS2345: Argument of type '{ integrations: { All: true; Mixpanel: boolean; }; messageId?: string; userId?: string | number; anonymousId?: string | number; subjectId?: string; traits?: any; timestamp?: Date; context?: any; }' is not assignable to parameter of type 'Identity & { traits?: any; timestamp?: Date | undefined; context?: any; integrations?: Integrations | undefined; }'.
+  Type '{ integrations: { All: true; Mixpanel: boolean; }; messageId?: string; userId?: string | number; anonymousId?: string | number; subjectId?: string; traits?: any; timestamp?: Date; context?: any; }' is not assignable to type '{ anonymousId: string | number; } & { traits?: any; timestamp?: Date | undefined; context?: any; integrations?: Integrations | undefined; }'.
+    Type '{ integrations: { All: true; Mixpanel: boolean; }; messageId?: string; userId?: string | number; anonymousId?: string | number; subjectId?: string; traits?: any; timestamp?: Date; context?: any; }' is not assignable to type '{ anonymousId: string | number; }'.
+      Types of property 'anonymousId' are incompatible.
+        Type 'string | number | undefined' is not assignable to type 'string | number'.
+          Type 'undefined' is not assignable to type 'string | number'.
+src/util/analytics.ts(58,17): error TS2345: Argument of type '{ integrations: { All: true; Mixpanel: boolean; }; messageId?: string; userId?: string | number; anonymousId?: string | number; subjectId?: string; event: string; properties?: any; timestamp?: Date; context?: any; }' is not assignable to parameter of type 'Identity & { event: string; properties?: any; timestamp?: Date | undefined; context?: any; integrations?: Integrations | undefined; }'.
+  Type '{ integrations: { All: true; Mixpanel: boolean; }; messageId?: string; userId?: string | number; anonymousId?: string | number; subjectId?: string; event: string; properties?: any; timestamp?: Date; context?: any; }' is not assignable to type '{ anonymousId: string | number; } & { event: string; properties?: any; timestamp?: Date | undefined; context?: any; integrations?: Integrations | undefined; }'.
+    Type '{ integrations: { All: true; Mixpanel: boolean; }; messageId?: string; userId?: string | number; anonymousId?: string | number; subjectId?: string; event: string; properties?: any; timestamp?: Date; context?: any; }' is not assignable to type '{ anonymousId: string | number; }'.
+      Types of property 'anonymousId' are incompatible.
+        Type 'string | number | undefined' is not assignable to type 'string | number'.
+          Type 'undefined' is not assignable to type 'string | number'.
+src/util/analytics.ts(79,17): error TS2345: Argument of type '{ integrations: { All: true; Mixpanel: boolean; }; messageId?: string; userId?: string | number; anonymousId?: string | number; subjectId?: string; properties?: any; timestamp?: Date; context?: any; }' is not assignable to parameter of type 'Identity & { category?: string | undefined; name?: string | undefined; properties?: any; timestamp?: Date | undefined; context?: any; integrations?: Integrations | undefined; messageId?: string | undefined; }'.
+  Type '{ integrations: { All: true; Mixpanel: boolean; }; messageId?: string; userId?: string | number; anonymousId?: string | number; subjectId?: string; properties?: any; timestamp?: Date; context?: any; }' is not assignable to type '{ anonymousId: string | number; } & { category?: string | undefined; name?: string | undefined; properties?: any; timestamp?: Date | undefined; context?: any; integrations?: Integrations | undefined; messageId?: string | undefined; }'.
+    Type '{ integrations: { All: true; Mixpanel: boolean; }; messageId?: string; userId?: string | number; anonymousId?: string | number; subjectId?: string; properties?: any; timestamp?: Date; context?: any; }' is not assignable to type '{ anonymousId: string | number; }'.
+      Types of property 'anonymousId' are incompatible.
+        Type 'string | number | undefined' is not assignable to type 'string | number'.
+          Type 'undefined' is not assignable to type 'string | number'.
+src/util/queue.spec.ts(74,24): error TS2488: Type '[number, T] | undefined' must have a '[Symbol.iterator]()' method that returns an iterator.
