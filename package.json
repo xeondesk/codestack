@@ -3,8 +3,8 @@
   "name": "vscode-extensions",
   "version": "0.0.1",
   "license": "MIT",
-  "description": "Gitpod VS Code extensions monorepo",
-  "packageManager": "yarn@1.22.22",
+  "description": "CodeStack VS Code extensions monorepo",
+  "packageManager": "bun@1.4.4",
   "engines": {
     "node": ">=18"
   },
@@ -17,11 +17,11 @@
     "ovsx": "^0.8.3"
   },
   "scripts": {
-    "compile:gitpod-shared": "yarn workspace gitpod-shared compile",
-    "build:gitpod-web": "yarn compile:gitpod-shared && yarn workspace gitpod-web vscode:prepublish",
-    "build:gitpod-remote": "yarn compile:gitpod-shared && yarn workspace gitpod-remote-ssh vscode:prepublish",
-    "build:preview": "yarn workspace @gitpod/portsview-preview build",
-    "dev:preview": "yarn workspace @gitpod/portsview-preview dev",
-    "hot-reload:gitpod-web": "yarn compile:gitpod-shared && yarn build:gitpod-web && cp -R ./apps/gitpod-web /ide/extensions/gitpod-web"
+    "compile:codestack-shared": "bun workspace codestack-shared run compile",
+    "build:codestack-web": "bun run compile:codestack-shared && bun workspace codestack-web run vscode:prepublish",
+    "build:codestack-remote": "bun run compile:codestack-shared && bun workspace codestack-remote-ssh run vscode:prepublish",
+    "build:preview": "bun workspace @codestack/portsview-preview run build",
+    "dev:preview": "bun workspace @codestack/portsview-preview run dev",
+    "hot-reload:codestack-web": "bun run compile:codestack-shared && bun run build:codestack-web && cp -R ./apps/codestack-web /ide/extensions/codestack-web"
   }
 }

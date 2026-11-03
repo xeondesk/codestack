@@ -1,9 +1,9 @@
 {
-  "name": "@gitpod/portsview-preview",
+  "name": "@codestack/portsview-preview",
   "version": "0.0.0",
   "private": true,
   "license": "MIT",
-  "description": "Static preview of the Gitpod Ports webview",
+  "description": "Static preview of the CodeStack Ports webview",
   "scripts": {
     "build": "node esbuild.js",
     "dev": "node esbuild.js --watch",

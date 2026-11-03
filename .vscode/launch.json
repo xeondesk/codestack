@@ -5,32 +5,32 @@
     "version": "0.2.0",
     "configurations": [
 		{
-			"name": "Launch gitpod-web",
+			"name": "Launch codestack-web",
 			"type": "extensionHost",
 			"request": "launch",
 			"runtimeExecutable": "${execPath}",
 			"args": [
 				"${workspaceFolder}",
-				"--extensionDevelopmentPath=${workspaceRoot}/apps/gitpod-web",
+				"--extensionDevelopmentPath=${workspaceRoot}/apps/codestack-web",
 				"--log=debug"
 			],
 			"outFiles": [
-				"${workspaceRoot}/apps/gitpod-web/out/**/*.js",
-				"${workspaceRoot}/packages/gitpod-shared/out/**/*.js",
+				"${workspaceRoot}/apps/codestack-web/out/**/*.js",
+				"${workspaceRoot}/packages/codestack-shared/out/**/*.js",
 			]
 		},
 		{
-			"name": "Launch gitpod-remote",
+			"name": "Launch codestack-remote",
 			"type": "extensionHost",
 			"request": "launch",
 			"runtimeExecutable": "${execPath}",
 			"args": [
 				"${workspaceFolder}",
-				"--extensionDevelopmentPath=${workspaceRoot}/apps/gitpod-remote",
+				"--extensionDevelopmentPath=${workspaceRoot}/apps/codestack-remote",
 				"--log=debug"
 			],
 			"outFiles": [
-				"${workspaceRoot}/apps/gitpod-remote/out/**/*.js",
+				"${workspaceRoot}/apps/codestack-remote/out/**/*.js",
 			]
 		},
     ]

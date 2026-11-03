@@ -1,0 +1,1 @@
+{"version":3,"file":"configcat-server.d.ts","sourceRoot":"","sources":["../../src/experiments/configcat-server.ts"],"names":[],"mappings":"AAAA;;;;GAIG;AAEH,OAAO,EAAc,MAAM,EAAE,MAAM,SAAS,CAAC;AAQ7C,yBAAiB,WAAW,CAAC;IACzB,SAAgB,sBAAsB,CAAC,MAAM,EAAE,MAAM,CAAC,MAAM,EAAE,GAAG,CAAC,GAAG,IAAI,CAaxE;CACJ;AAED,wBAAgB,8BAA8B,IAAI,MAAM,CAyBvD"}

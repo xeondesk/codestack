@@ -16,7 +16,7 @@ for (const file of ['index.html', 'preview.css']) {
 
 const options = {
     entryPoints: {
-        portsview: path.join(root, '../../packages/gitpod-shared/portsview/src/main.ts'),
+        portsview: path.join(root, '../../packages/codestack-shared/portsview/src/main.ts'),
         codicon: require.resolve('@vscode/codicons/dist/codicon.css'),
     },
     mainFields: ['svelte', 'browser', 'module', 'main'],
@@ -44,7 +44,7 @@ async function run() {
     const context = await esbuild.context(options);
     if (isWatch) {
         await context.watch();
-        console.log('watching packages/gitpod-shared/portsview for changes...');
+        console.log('watching packages/codestack-shared/portsview for changes...');
     } else {
         await context.rebuild();
         await context.dispose();

@@ -1,0 +1,22 @@
+image: codestack/workspace-node
+tasks:
+  - init: |
+      bun install
+    name: Compile codestack-shared
+    command: |
+      bun workspace codestack-shared run compile
+      gp sync-done shared
+      bun workspace codestack-shared run watch
+  - name: Compile codestack-web
+    command: |
+      gp sync-await shared
+      bun workspace codestack-web run watch
+  - name: Compile codestack-remote
+    command: |
+      gp sync-await shared
+      bun workspace codestack-remote-ssh run watch
+
+vscode:
+  extensions:
+    - dbaeumer.vscode-eslint
+    - svelte.svelte-vscode

@@ -1,0 +1,608 @@
+{
+  "name": "codestack-web",
+  "displayName": "%displayName%",
+  "description": "%description%",
+  "publisher": "codestack",
+  "version": "0.0.8",
+  "license": "MIT",
+  "icon": "resources/codestack.png",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/khulnasoft-bot/codestack-code"
+  },
+  "bugs": {
+    "url": "https://github.com/khulnasoft-bot/codestack/issues"
+  },
+  "engines": {
+    "vscode": "^1.83.0"
+  },
+  "enabledApiProposals": [
+    "resolvers",
+    "tunnels",
+    "contribViewsRemote",
+    "contribRemoteHelp",
+    "contribMenuBarHome"
+  ],
+  "categories": [
+    "Other"
+  ],
+  "extensionKind": [
+    "workspace"
+  ],
+  "activationEvents": [
+    "*",
+    "onAuthenticationRequest:codestack",
+    "onAuthenticationRequest:github"
+  ],
+  "main": "./out/extension.js",
+  "segmentKey": "YErmvd89wPsrCuGcVnF2XAl846W9WIGl",
+  "contributes": {
+    "commands": [
+      {
+        "command": "codestack.stop.ws",
+        "title": "%stopWorkspace%",
+        "enablement": "codestack.inWorkspace == true && codestack.workspaceOwned == true"
+      },
+      {
+        "command": "codestack.open.settings",
+        "title": "%openSettings%",
+        "enablement": "codestack.inWorkspace == true"
+      },
+      {
+        "command": "codestack.open.accessControl",
+        "title": "%openAccessControl%",
+        "enablement": "codestack.inWorkspace == true"
+      },
+      {
+        "command": "codestack.open.context",
+        "title": "%openContext%",
+        "enablement": "codestack.inWorkspace == true"
+      },
+      {
+        "command": "codestack.open.dashboard",
+        "title": "%openDashboard%",
+        "enablement": "codestack.inWorkspace == true"
+      },
+      {
+        "command": "codestack.open.documentation",
+        "title": "%openDocumentation%",
+        "enablement": "codestack.inWorkspace == true"
+      },
+      {
+        "command": "codestack.ExtendTimeout",
+        "title": "%extendTimeout%",
+        "enablement": "codestack.inWorkspace == true && codestack.workspaceOwned == true"
+      },
+      {
+        "command": "codestack.setWorkspaceTimeout",
+        "title": "%configureTimeout%",
+        "enablement": "codestack.inWorkspace == true && codestack.workspaceOwned == true"
+      },
+      {
+        "command": "codestack.takeSnapshot",
+        "title": "%takeSnapshot%",
+        "enablement": "codestack.inWorkspace == true && codestack.workspaceOwned == true"
+      },
+      {
+        "command": "codestack.shareWorkspace",
+        "title": "%shareWorkspace%",
+        "enablement": "codestack.inWorkspace == true && codestack.workspaceOwned == true && codestack.workspaceShared == false"
+      },
+      {
+        "command": "codestack.stopSharingWorkspace",
+        "title": "%stopSharingWorkspace%",
+        "enablement": "codestack.inWorkspace == true && codestack.workspaceOwned == true && codestack.workspaceShared == true"
+      },
+      {
+        "command": "codestack.openInStable",
+        "title": "%openInStable%",
+        "enablement": "codestack.inWorkspace == true && codestack.UIKind == 'web'"
+      },
+      {
+        "command": "codestack.openInInsiders",
+        "title": "%openInInsiders%",
+        "enablement": "codestack.inWorkspace == true && codestack.UIKind == 'web'"
+      },
+      {
+        "command": "codestack.ports.openBrowser",
+        "title": "%openBrowser%",
+        "icon": "$(globe)"
+      },
+      {
+        "command": "codestack.ports.retryAutoExpose",
+        "title": "%retryAutoExpose%",
+        "icon": "$(refresh)"
+      },
+      {
+        "command": "codestack.ports.preview",
+        "title": "%openPreview%",
+        "icon": "$(open-preview)"
+      },
+      {
+        "command": "codestack.ports.makePrivate",
+        "title": "%makePrivate%",
+        "icon": "$(unlock)"
+      },
+      {
+        "command": "codestack.ports.makePublic",
+        "title": "%makePublic%",
+        "icon": "$(lock)"
+      },
+      {
+        "command": "codestack.ports.makeHTTPS",
+        "title": "%makeHTTPS%",
+        "icon": "$(workspace-untrusted)"
+      },
+      {
+        "command": "codestack.ports.makeHTTP",
+        "title": "%makeHTTP%",
+        "icon": "$(workspace-trusted)"
+      },
+      {
+        "command": "codestack.ports.tunnelNetwork",
+        "title": "%tunnelNetwork%",
+        "icon": "$(eye)"
+      },
+      {
+        "command": "codestack.ports.tunnelHost",
+        "title": "%tunnelHost%",
+        "icon": "$(eye-closed)"
+      },
+      {
+        "command": "codestack.extensions.addToConfig",
+        "title": "%addToConfig%"
+      },
+      {
+        "command": "codestack.dev.connectLocalApp",
+        "title": "%connectLocalApp%"
+      },
+      {
+        "command": "codestack.dev.enableForwardedPortsView",
+        "title": "%enableForwardedPortsView%"
+      },
+      {
+        "command": "codestack.codestackyml.run",
+        "title": "%runCodeStackYml%",
+        "icon": "$(play)"
+      },
+      {
+        "command": "codestack.codestackyml.editorContext.run",
+        "title": "%runCodeStackYml%",
+        "icon": "$(play)"
+      },
+      {
+        "command": "codestack.codestackyml.dockerfile.editorContext.run",
+        "title": "%runCodeStackYml%",
+        "icon": "$(play)"
+      },
+      {
+        "command": "codestack.codestackyml.editorTitle.run",
+        "title": "%runCodeStackYml%",
+        "icon": "$(play)"
+      },
+      {
+        "command": "codestack.codestackyml.dockerfile.editorTitle.run",
+        "title": "%runCodeStackYml%",
+        "icon": "$(play)"
+      }
+    ],
+    "menus": {
+      "menuBar/home": [
+        {
+          "command": "codestack.open.context",
+          "group": "codestack@10"
+        },
+        {
+          "command": "codestack.open.dashboard",
+          "group": "codestack@20"
+        },
+        {
+          "command": "codestack.open.documentation",
+          "group": "codestack@30",
+          "when": "codestack.dataops !== true"
+        },
+        {
+          "command": "codestack.takeSnapshot",
+          "group": "codestack@40",
+          "when": "codestack.workspaceOwned == true"
+        },
+        {
+          "command": "codestack.shareWorkspace",
+          "group": "codestack@50",
+          "when": "codestack.workspaceOwned == true && codestack.workspaceShared == false"
+        },
+        {
+          "command": "codestack.stopSharingWorkspace",
+          "group": "codestack@50",
+          "when": "codestack.workspaceOwned == true && codestack.workspaceShared == true"
+        },
+        {
+          "command": "codestack.stop.ws",
+          "group": "codestack@60",
+          "when": "codestack.workspaceOwned == true"
+        },
+        {
+          "command": "codestack.openInStable",
+          "group": "codestack@70"
+        },
+        {
+          "command": "codestack.openInInsiders",
+          "group": "codestack@80"
+        }
+      ],
+      "accounts/context": [
+        {
+          "command": "codestack.open.settings",
+          "group": "navigation@10"
+        },
+        {
+          "command": "codestack.open.accessControl",
+          "group": "navigation@20"
+        },
+        {
+          "command": "codestack.ExtendTimeout",
+          "group": "navigation@50",
+          "when": "codestack.workspaceOwned == true"
+        }
+      ],
+      "extension/context": [
+        {
+          "command": "codestack.extensions.addToConfig",
+          "group": "2_configure"
+        }
+      ],
+      "view/item/context": [
+        {
+          "command": "codestack.ports.tunnelNetwork",
+          "when": "view == codestack.workspace && viewItem =~ /host/ && viewItem =~ /tunneled/",
+          "group": "inline@1"
+        },
+        {
+          "command": "codestack.ports.tunnelHost",
+          "when": "view == codestack.workspace && viewItem =~ /network/ && viewItem =~ /tunneled/",
+          "group": "inline@1"
+        },
+        {
+          "command": "codestack.ports.makePublic",
+          "when": "view == codestack.workspace && viewItem =~ /private/",
+          "group": "inline@2"
+        },
+        {
+          "command": "codestack.ports.makePrivate",
+          "when": "view == codestack.workspace && viewItem =~ /public/",
+          "group": "inline@2"
+        },
+        {
+          "command": "codestack.ports.preview",
+          "when": "view == codestack.workspace && viewItem =~ /exposed/ || viewItem =~ /tunneled/",
+          "group": "inline@3"
+        },
+        {
+          "command": "codestack.ports.openBrowser",
+          "when": "view == codestack.workspace && viewItem =~ /exposed/ || viewItem =~ /tunneled/",
+          "group": "inline@4"
+        },
+        {
+          "command": "codestack.ports.retryAutoExpose",
+          "when": "view == codestack.workspace && viewItem =~ /failed/",
+          "group": "inline@5"
+        }
+      ],
+      "commandPalette": [
+        {
+          "command": "codestack.extensions.addToConfig",
+          "when": "false"
+        },
+        {
+          "command": "codestack.ports.preview",
+          "when": "false"
+        },
+        {
+          "command": "codestack.ports.openBrowser",
+          "when": "false"
+        },
+        {
+          "command": "codestack.ports.retryAutoExpose",
+          "when": "false"
+        },
+        {
+          "command": "codestack.ports.makePublic",
+          "when": "false"
+        },
+        {
+          "command": "codestack.ports.makePrivate",
+          "when": "false"
+        },
+        {
+          "command": "codestack.ports.makeHTTPS",
+          "when": "false"
+        },
+        {
+          "command": "codestack.ports.makeHTTP",
+          "when": "false"
+        },
+        {
+          "command": "codestack.ports.tunnelNetwork",
+          "when": "false"
+        },
+        {
+          "command": "codestack.ports.tunnelHost",
+          "when": "false"
+        },
+        {
+          "command": "codestack.dev.connectLocalApp",
+          "when": "codestack.localAppConnected == false"
+        },
+        {
+          "command": "codestack.codestackyml.run",
+          "when": "codestack.rebuild.enabled"
+        },
+        {
+          "command": "codestack.codestackyml.editorContext.run",
+          "when": "false"
+        },
+        {
+          "command": "codestack.codestackyml.dockerfile.editorContext.run",
+          "when": "false"
+        },
+        {
+          "command": "codestack.codestackyml.editorTitle.run",
+          "when": "false"
+        },
+        {
+          "command": "codestack.codestackyml.dockerfile.editorTitle.run",
+          "when": "false"
+        },
+        {
+          "command": "codestack.open.documentation",
+          "when": "codestack.dataops !== true"
+        }
+      ],
+      "statusBar/remoteIndicator": [
+        {
+          "command": "codestack.stop.ws",
+          "group": "remote_00_codestack_navigation@10",
+          "when": "codestack.inWorkspace == true && codestack.workspaceOwned == true"
+        },
+        {
+          "command": "codestack.open.settings",
+          "group": "remote_00_codestack_navigation@20",
+          "when": "codestack.inWorkspace == true"
+        },
+        {
+          "command": "codestack.open.accessControl",
+          "group": "remote_00_codestack_navigation@30",
+          "when": "codestack.inWorkspace == true"
+        },
+        {
+          "command": "codestack.open.context",
+          "group": "remote_00_codestack_navigation@40",
+          "when": "codestack.inWorkspace == true"
+        },
+        {
+          "command": "codestack.open.dashboard",
+          "group": "remote_00_codestack_navigation@50",
+          "when": "codestack.inWorkspace == true"
+        },
+        {
+          "command": "codestack.open.documentation",
+          "group": "remote_00_codestack_navigation@60",
+          "when": "codestack.inWorkspace == true && codestack.dataops !== true"
+        },
+        {
+          "command": "codestack.ExtendTimeout",
+          "group": "remote_00_codestack_navigation@110",
+          "when": "codestack.inWorkspace == true && codestack.workspaceOwned == true"
+        },
+        {
+          "command": "codestack.takeSnapshot",
+          "group": "remote_00_codestack_navigation@120",
+          "when": "codestack.inWorkspace == true && codestack.workspaceOwned == true"
+        },
+        {
+          "command": "codestack.shareWorkspace",
+          "group": "remote_00_codestack_navigation@130",
+          "when": "codestack.inWorkspace == true && codestack.workspaceOwned == true && codestack.workspaceShared == false"
+        },
+        {
+          "command": "codestack.stopSharingWorkspace",
+          "group": "remote_00_codestack_navigation@130",
+          "when": "codestack.inWorkspace == true && codestack.workspaceOwned == true && codestack.workspaceShared == true"
+        },
+        {
+          "command": "codestack.openInStable",
+          "group": "remote_00_codestack_navigation@900",
+          "when": "codestack.inWorkspace == true && codestack.UIKind == 'web'"
+        },
+        {
+          "command": "codestack.openInInsiders",
+          "group": "remote_00_codestack_navigation@1000",
+          "when": "codestack.inWorkspace == true && codestack.UIKind == 'web'"
+        }
+      ],
+      "editor/context": [
+        {
+          "command": "codestack.codestackyml.editorContext.run",
+          "when": "codestack.rebuild.enabled && resourceFilename == '.codestack.yml' && resourceScheme == file",
+          "group": "0_navigation@0"
+        },
+        {
+          "command": "codestack.codestackyml.dockerfile.editorContext.run",
+          "when": "codestack.rebuild.enabled && codestack.rebuild.dockerfile",
+          "group": "0_navigation@0"
+        }
+      ],
+      "editor/title": [
+        {
+          "command": "codestack.codestackyml.editorTitle.run",
+          "when": "codestack.rebuild.enabled && resourceFilename == '.codestack.yml' && resourceScheme == file",
+          "group": "navigation"
+        },
+        {
+          "command": "codestack.codestackyml.dockerfile.editorTitle.run",
+          "when": "codestack.rebuild.enabled && codestack.rebuild.dockerfile",
+          "group": "navigation"
+        }
+      ]
+    },
+    "views": {
+      "remote": [
+        {
+          "id": "codestack.workspace",
+          "name": "CodeStack Workspace",
+          "when": "false"
+        }
+      ],
+      "portsView": [
+        {
+          "id": "codestack.portsView",
+          "name": "Ports",
+          "type": "webview",
+          "icon": "$(plug)"
+        }
+      ]
+    },
+    "authentication": [
+      {
+        "id": "codestack",
+        "label": "CodeStack"
+      },
+      {
+        "id": "github",
+        "label": "GitHub"
+      }
+    ],
+    "walkthroughs": [
+      {
+        "id": "codestack-getstarted",
+        "title": "Get Started with CodeStack",
+        "description": "Explore what CodeStack is and how to get the most out of it.",
+        "steps": [
+          {
+            "id": "whatiscodestack",
+            "title": "What is CodeStack?",
+            "description": "",
+            "media": {
+              "markdown": "resources/walkthroughs/getstarted/what-is-codestack.md"
+            }
+          },
+          {
+            "id": "prebuilds",
+            "title": "Prebuilds do the heavy lifting",
+            "description": "",
+            "media": {
+              "markdown": "resources/walkthroughs/getstarted/prebuilds.md"
+            }
+          },
+          {
+            "id": "workspaces",
+            "title": "A new workspace per task",
+            "description": "",
+            "media": {
+              "markdown": "resources/walkthroughs/getstarted/workspaces.md"
+            }
+          },
+          {
+            "id": "terminal",
+            "title": "Full access to a terminal",
+            "description": "",
+            "media": {
+              "markdown": "resources/walkthroughs/getstarted/terminal.md"
+            }
+          },
+          {
+            "id": "ports",
+            "title": "Open ports",
+            "description": "",
+            "media": {
+              "markdown": "resources/walkthroughs/getstarted/ports.md"
+            }
+          },
+          {
+            "id": "vscodedesktopsupport",
+            "title": "VS Code desktop support",
+            "description": "",
+            "media": {
+              "markdown": "resources/walkthroughs/getstarted/vscodedesktopsupport.md"
+            }
+          }
+        ]
+      }
+    ],
+    "configuration": {
+      "title": "CodeStack Classic",
+      "properties": {
+        "codestack.validate.neverPrompt": {
+          "type": "boolean",
+          "description": "Control whether to prompt to validate the workspace configuration on change.",
+          "default": false
+        },
+        "codestack.openInStable.neverPrompt": {
+          "type": "boolean",
+          "description": "Control whether to prompt to open in VS Code Desktop on page load.",
+          "default": false
+        }
+      }
+    },
+    "viewsContainers": {
+      "panel": [
+        {
+          "id": "portsView",
+          "title": "Ports",
+          "icon": "$(plug)"
+        }
+      ]
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "bun run build:webview && webpack --mode production",
+    "inject-commit-hash": "jq '.commit = \"'$(git rev-parse --short HEAD)'\"' package.json > package.json.tmp && mv package.json.tmp package.json",
+    "webpack": "webpack --mode development",
+    "compile": "tsc -b",
+    "watch": "tsc -b -w",
+    "build:webview": "node esbuild.js",
+    "watch:webview": "node esbuild.js --watch",
+    "start:webview": "sirv public --no-clear",
+    "update-dts": "cd \"src/@types\" && bun run vscode-dts dev",
+    "package": "bunx vsce package --yarn --allow-star-activation"
+  },
+  "devDependencies": {
+    "@vscode/vsce": "^2.22.0",
+    "vscode-dts": "^0.3.3",
+    "@parcel/watcher": "^2.1.0",
+    "@tsconfig/svelte": "^2.0.0",
+    "@types/js-yaml": "^4.0.5",
+    "@types/node": "16.x",
+    "@types/node-fetch": "^2.5.12",
+    "@types/uuid": "8.0.0",
+    "@types/vscode": "1.75.0",
+    "@types/vscode-webview": "^1.57.0",
+    "@types/webpack": "^5.28.0",
+    "@types/yauzl": "^2.9.1",
+    "@types/yazl": "^2.4.2",
+    "@typescript-eslint/eslint-plugin": "^5.19.0",
+    "@typescript-eslint/parser": "^5.19.0",
+    "esbuild": "^0.17.11",
+    "esbuild-plugin-alias-path": "^2.0.2",
+    "esbuild-svelte": "^0.7.3",
+    "eslint": "^8.13.0",
+    "sirv-cli": "^2.0.0",
+    "svelte": "^3.0.0",
+    "svelte-check": "^2.0.0",
+    "svelte-preprocess": "^5.0.1",
+    "ts-loader": "^9.2.7",
+    "ttf-loader": "^1.0.2",
+    "typescript": "^4.6.3",
+    "webpack": "^5.42.0",
+    "webpack-cli": "^4.7.2"
+  },
+  "dependencies": {
+    "codestack-shared": "*",
+    "js-yaml": "^4.1.0",
+    "node-fetch": "2.6.7",
+    "uuid": "8.1.0",
+    "vscode-nls": "^5.0.0",
+    "yauzl": "^2.9.2",
+    "yazl": "^2.5.1"
+  }
+}
