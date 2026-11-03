@@ -40,7 +40,7 @@ class SegmentAnalyticsWriter implements IAnalyticsWriter {
                         All: true,
                         Mixpanel: !!msg.userId,
                     },
-                },
+                } as Parameters<typeof this.analytics.identify>[0],
                 (err: Error) => {
                     if (err) {
                         log.warn("analytics.identify failed", err);
@@ -61,7 +61,7 @@ class SegmentAnalyticsWriter implements IAnalyticsWriter {
                         All: true,
                         Mixpanel: !!msg.userId,
                     },
-                },
+                } as Parameters<typeof this.analytics.track>[0],
                 (err: Error) => {
                     if (err) {
                         log.warn("analytics.track failed", err);
@@ -82,7 +82,7 @@ class SegmentAnalyticsWriter implements IAnalyticsWriter {
                         All: true,
                         Mixpanel: !!msg.userId,
                     },
-                },
+                } as Parameters<typeof this.analytics.page>[0],
                 (err: Error) => {
                     if (err) {
                         log.warn("analytics.page failed", err);
